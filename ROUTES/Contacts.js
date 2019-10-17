@@ -58,8 +58,40 @@ router.post("/", middleware, async (request, response) => {
 // @route     PUT api/contacts
 // @desc      EDIT EXISTING CONTACT
 // @access    Private
-router.put("/", middleware, (request, response) => {
-  response.json({ msg: "Contacts" });
+router.put("/:id", middleware, async (request, response) => {
+  const { name, email, phone, type } = request.body;
+
+  // STRUCTURE THE FIELDS TO CHANGE
+  const contactFields = {};
+
+  if (name) contactFields.name = name;
+  if (email) contactFields.email = email;
+  if (phone) contactFields.phone = phone;
+  if (type) contactFields.type = type;
+
+  try {
+    // FIND THE MATCHING CONTACT
+    let contact = await Contacts.findById(request.params.id);
+
+    // MAKE SURE THE CONTACT EXISTS
+    if (!contact)
+      return response.status(404).json({ msg: "No Contact Was Found" });
+
+    // COMPARES THE PARENT ID TO THE PARAMETERS ID TO MAKE SURE WE AREN'T GETTING A DIFFERENT ACCOUNT'S CONTACT
+    if (contact.user.toString() !== request.user.id) {
+      return response.status(400).json({ msg: "Not Authorized" });
+    }
+    // FIND THE CONTACT AND UPDATE IT WITH THE NEW FIELDS
+    contact = await Contacts.findByIdAndUpdate(
+      request.params.id,
+      { $set: contactFields },
+      { new: true }
+    );
+
+    response.status(200).json({ NewContact: contactFields });
+  } catch (err) {
+    throw err;
+  }
 });
 
 // @route     DELETE api/contacts
