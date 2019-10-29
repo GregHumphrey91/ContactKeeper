@@ -51,7 +51,7 @@ router.post(
     // If Error, return a json error object
     if (!errors.isEmpty()) {
       // Error Result
-      return response.status(400).json({ errors: errors.array() });
+      return response.status(400).json({ msg: errors.array()[0].msg });
     }
 
     // Destructure Post fields
@@ -93,7 +93,7 @@ router.post(
         jwt.sign(
           payload, // 1 the payload object
           config.get("jwtSecret"), // 2 the config file
-          { expiresIn: 36000 }, // 3 the expiration date
+          { expiresIn: "3hr" }, // 3 the expiration date
           (error, token) => {
             // 4 the callback func for returning token
             if (error) throw error;
@@ -102,7 +102,7 @@ router.post(
         );
       }
     } catch (error) {
-      console.error(error.message);
+      console.error(error.request);
       response.status(500).send("Server Error \n " + error.message);
     }
   }

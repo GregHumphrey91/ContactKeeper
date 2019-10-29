@@ -35,16 +35,16 @@ router.post(
     // If Error, return a json error object
     if (!errors.isEmpty()) {
       // Error Result
-      return response.status(400).json({ errors: errors.array() });
+      return response.status(400).json({ msg: errors.array()[0].msg });
     }
 
     // Destructure REQUEST BODY
     const { email, password } = request.body;
-
+    console.log(email);
     try {
       // FINDS THE USER IN DATABASE BY EMAIL
       let user = await User.findOne({ email });
-
+      console.log(user);
       // IF NO USER, RETURN 400
       if (!user) {
         return response.status(400).json({ msg: "Invalid Credentials" });
@@ -71,7 +71,7 @@ router.post(
             payload,
             config.get("jwtSecret"),
             {
-              expiresIn: 36000
+              expiresIn: "30min"
             },
             async (error, token) => {
               if (error) throw error;
