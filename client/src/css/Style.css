@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css?family=Cedarville+Cursive|Dancing+Script|Lobster|Pacifico|Satisfy&display=swap");
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  padding: 0;
+  background-color: white;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.div-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.logOut {
+  border: none;
+  background-color: #2185d0;
+  color: white;
+  font-size: 15px;
+  width: 80px;
+  font-weight: bold;
+}
+
+.nav-header {
+  background-color: #2185d0;
+  border: solid 1px #2185d0;
+  text-align: left;
+}
+.nav-header h1 {
+  padding-top: 10px;
+  font-size: 25px;
+  font-family: "Dancing Script", cursive;
+  color: pink;
+}
+.nav-header h1 .book.large.icon {
+  color: white;
+}
+.nav-header .logOut {
+  cursor: pointer;
+}
+.nav-header nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.nav-header nav h1 {
+  flex: 1;
+}
+.nav-header nav a {
+  padding-top: 20px;
+  color: white;
+  font-size: 15px;
+  margin-right: 20px;
+}
+.nav-header nav a.active {
+  color: hotpink;
+}
+
+.edit-contact .label {
+  margin: 5px auto;
+}
+
+.addContact form {
+  background-color: white;
+  border: none;
+}
+
+form {
+  padding: 50px;
+  border: solid 1px lightgrey;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  margin: 100px auto;
+}
+form input,
+form button {
+  margin: 10px auto;
+  display: block;
+}
+
+@media screen and (min-width: 740px) {
+  nav {
+    justify-content: left;
+  }
+
+  form {
+    padding: 100px;
+    width: 700px;
+  }
+}
+
+/*# sourceMappingURL=Style.css.map */
