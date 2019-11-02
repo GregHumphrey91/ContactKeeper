@@ -119,7 +119,7 @@ router.post(
 //
 // ====================================================
 
-router.get("/", async (request, response) => {
+router.get("/",  async (request, response) => {
   // Checks mongoose for all entries
   const users = await User.find();
   if (users) {

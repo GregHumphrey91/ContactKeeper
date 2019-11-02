@@ -47,6 +47,13 @@ export const App = props => {
     checkToken();
   }, []);
 
+  useEffect(() => {
+    fetch("/api/users")
+      .then(res => res.json())
+      .then(res => console.log(res))
+      .catch(error => console.log(error.message));
+  });
+
   // CHECKS JWT EXPIRATION DATE
   const checkToken = () => {
     const token = localStorage.getItem("LoginToken");

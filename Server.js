@@ -28,6 +28,9 @@ app.use(`/api/users`, require("./ROUTES/Users"));
 app.use(`/api/auth`, require("./ROUTES/Auth"));
 app.use(`/api/contacts`, require("./ROUTES/Contacts"));
 
+const publicPath = path.join(__dirname, "client/build");
+console.log(publicPath);
+
 // Serve Static Assets In Production
 if (process.env.NODE_ENV === "production") {
   //Set static folder
