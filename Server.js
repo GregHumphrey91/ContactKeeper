@@ -4,12 +4,14 @@ const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 const config = require("config");
-
+const test = require("./config/default.json").mongoURI;
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+console.log(test);
 
 app.use(cors());
 
@@ -20,7 +22,7 @@ try {
   // IMPORT DATABASE CONFIG
   console.log("Before Running test");
   const db = config.get("mongoURI");
-  console.log(db);
+
   const connectDB = () => {
     return mongoose
       .connect(db, {
