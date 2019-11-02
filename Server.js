@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const path = require("path");
+const mongoose = require("mongoose");
+const config = require("config");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,7 +18,18 @@ const PORT = process.env.PORT || 5000;
 try {
   // Connect Database
   // IMPORT DATABASE CONFIG
-  const connectDB = require("./config/DB");
+  const db = config.get("mongoURI");
+  console.log(db);
+  const connectDB = () => {
+    return mongoose
+      .connect(db, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+      })
+      .then(console.log("Mongo Connected"))
+      .catch(error => console.error(error.message));
+  };
 
   connectDB();
 } catch (error) {
