@@ -80,7 +80,7 @@ export const App = props => {
     const { name, password, email } = loginState;
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth", {
+      const response = await axios.post("/api/auth", {
         name,
         password,
         email
@@ -96,7 +96,7 @@ export const App = props => {
   const register = async registerState => {
     try {
       const { name, password, email } = registerState;
-      await axios.post("http://localhost:5000/api/users", {
+      await axios.post("/api/users", {
         name,
         password,
         email
