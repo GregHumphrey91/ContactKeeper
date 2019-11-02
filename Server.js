@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000;
 try {
   // Connect Database
   // IMPORT DATABASE CONFIG
-  const connectDB = require("./CONFIG/DB");
+  const connectDB = require("./config/DB");
 
   connectDB();
 } catch (error) {
