@@ -39,6 +39,5 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-console.log(path.resolve(__dirname));
 
 app.listen(PORT, () => console.log(`Server started on ${PORT}`));
