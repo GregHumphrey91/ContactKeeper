@@ -45,7 +45,7 @@ const Home = ({ ...props }) => {
       try {
         const token = localStorage.getItem("LoginToken");
         const decodedToken = decode(token);
-        const contacts = await Axios.get("/api/contacts", {
+        const contacts = await Axios.get("http://localhost:5000/api/contacts", {
           headers: {
             "Content-Type": "application/json",
             "x-auth-token": token
@@ -96,7 +96,7 @@ const Home = ({ ...props }) => {
     try {
       await Axios({
         method: "post",
-        url: "/api/contacts",
+        url: "http://localhost:5000/api/contacts",
         data: state,
         headers: {
           "x-auth-token": localStorage.getItem("LoginToken")
@@ -135,7 +135,7 @@ const Home = ({ ...props }) => {
     try {
       const contacts = await Axios({
         method: "delete",
-        url: `/api/contacts/${contact._id}`,
+        url: `http://localhost:5000/api/contacts/${contact._id}`,
         headers: {
           "x-auth-token": localStorage.getItem("LoginToken")
         }

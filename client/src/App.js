@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import EditContact from "./components/Contact";
 import Register from "./components/Register";
+import Footer from "./components/Layout/Footer";
 import Errors from "./components/Errors";
 // SEMANTIC
 import { Container } from "semantic-ui-react";
@@ -20,7 +21,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { success } from "./Utils/Notify";
 import moment from "moment";
-
 import jwtDecode from "jwt-decode";
 
 export const App = props => {
@@ -80,7 +80,7 @@ export const App = props => {
     const { name, password, email } = loginState;
 
     try {
-      const response = await axios.post("/api/auth", {
+      const response = await axios.post("http://localhost:5000/api/auth", {
         name,
         password,
         email
@@ -96,7 +96,7 @@ export const App = props => {
   const register = async registerState => {
     try {
       const { name, password, email } = registerState;
-      await axios.post("/api/users", {
+      await axios.post("http://localhost:5000/api/users", {
         name,
         password,
         email
@@ -179,8 +179,10 @@ export const App = props => {
                 />
               )}
             />
+
             <ToastContainer />
           </Container>
+          <Footer />
         </>
       </BrowserRouter>
     );

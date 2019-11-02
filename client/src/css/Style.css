@@ -59,6 +59,10 @@ body {
   color: hotpink;
 }
 
+.container {
+  min-height: 96vh;
+}
+
 .edit-contact .label {
   margin: 5px auto;
 }
