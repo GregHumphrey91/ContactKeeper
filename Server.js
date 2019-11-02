@@ -4,14 +4,21 @@ const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 const config = require("config");
-const test = require("./config/default.json").mongoURI;
+const test = require("./config/production.json").mongoURI;
+const test2 = require("./config/default.json").mongoURI;
 const bodyParser = require("body-parser");
+const fs = require("fs");
+// const folder = require("./app/");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
 
-console.log(test);
+// fs.readdir(folder, (err, files) => {
+//   files.forEach(file => console.log(file));
+// });
+
+console.log(`\n\n PRODUCTION KEY:`, test, "\nLOCAL KEY:", test2, "\n\n");
 
 app.use(cors());
 
