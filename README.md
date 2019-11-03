@@ -4,7 +4,7 @@
 
 ## **Live App**:
 
-[Contact Keeper](https://pure-gorge-26990.herokuapp.com/)
+[Click Here](https://pure-gorge-26990.herokuapp.com/)
 
 ## **Abstract:**
 
@@ -16,7 +16,7 @@ _Once you create a profile, you can store and manage any contacts._
 
 ## **Installation Instructions:**
 
-## _Note: for a local enviornment, you must create a config folder containing your mongo db keys_
+### _Note: for a local enviornment, you must create a config folder containing your mongo db keys_
 
 Open Your Terminal
 
