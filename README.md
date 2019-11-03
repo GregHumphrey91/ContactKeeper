@@ -17,11 +17,11 @@ Open Your Terminal
 ### Copy and paste the following lines below into your terminal:
 
 ```bash
-git clone https://github.com/GregGains/ContactKeepr.git
+git clone https://github.com/GregGains/ContactKeeper.git
 ```
 
 ```bash
-cd React/
+cd ContactKeeper/
 ```
 
 ```bash
@@ -29,17 +29,25 @@ npm install
 ```
 
 ```bash
-npm start
+npm run clientinstall
+```
+
+```bash
+npm run dev
 ```
 
 ## **Project Background:**
 
-This project will help us learn how to build React apps and make an api calls to obtain data and then utilize that data.
+This project will show case Full Stack capabilities with Font-end Frameworks like React & Back-end frameworks like Express
 
 ## **Project Goals:**
 
-- Write a program from scratch
-- Design and implement our app in React using states and props
+- Design a server with Express using MVC-like structure
+- Create Routes, Database Models with Mongoose, Server authentication with Express-validator
+- Protect private routes with JsonWebTokens, and encrypt user information with Bcrypt
+- Design and implement client side in React using front end librarys like Semantic UI
+- Create private routes using React-Router / JsonWebTokens
+- Make code easy to read, create folder structures, comment code's functionality & purposes
 - Write modular, reusable code that follows SRP (Single Responsibility Principle)
 
 <!-- STRIKE THROUGH USE DOUBLE TILDE SYMBOL ~~   -->
