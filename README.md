@@ -4,7 +4,7 @@
 
 ## **Live App**:
 
-    [Contact Keeper](https://pure-gorge-26990.herokuapp.com/)
+[Contact Keeper](https://pure-gorge-26990.herokuapp.com/)
 
 ## **Abstract:**
 

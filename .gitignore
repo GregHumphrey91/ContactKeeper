@@ -1,2 +1,7 @@
 node_modules
 react16
+config
+default.json
+production.json
+CONFIG
+Procfile
