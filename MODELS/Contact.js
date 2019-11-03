@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ContactSchema = mongoose.Schema({
-    // CREATES AN ASSOCIATION WITH THE OBJECT ID SO EACH CONTACT IS ASSIGNED TO ITS PARENT OBJECT ID WHICH IS THE USER
+    // Mongo Foreign key
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'

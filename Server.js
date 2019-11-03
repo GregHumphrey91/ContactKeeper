@@ -4,45 +4,38 @@ const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 const config = require("config");
-
 const bodyParser = require("body-parser");
 
+//BodyParser settings
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
 app.use(bodyParser.json());
 
+//Init cors
 app.use(cors());
 
+// Define Port
 const PORT = process.env.PORT || 5000;
 
-try {
-  // Connect Database
-  
-  // IMPORT DATABASE CONFIG
-  const db = config.get("mongoURI");
+// Env Vars
+const db = config.get("mongoURI");
 
-  const connectDB = () => {
-    return mongoose
-      .connect(db, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false
-      })
-      .then(console.log("Mongo Connected"))
-      .catch(error => console.error(error.message));
-  };
+// Connect Mongo
+const connectDB = () => {
+  return mongoose
+    .connect(db, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    })
+    .catch(error => console.error(error.message));
+};
 
-  connectDB();
-} catch (error) {
-  console.log("!!!!!!!THIS IS A CONNECTION ERROR: ", error.message);
-}
-
-// API ENDPOINTS
+//  Routes
 app.use(`/api/users`, require("./ROUTES/Users"));
 app.use(`/api/auth`, require("./ROUTES/Auth"));
 app.use(`/api/contacts`, require("./ROUTES/Contacts"));
 
+// Production Routes
 if (process.env.NODE_ENV === "production") {
   //Set static folder
   app.use(express.static("client/build"));
@@ -53,6 +46,7 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-// Serve Static Assets In Production
-
-app.listen(PORT, () => console.log(`Server started on ${PORT}`));
+// Run Server
+connectDB().then(
+  app.listen(PORT, () => console.log(`Server started on ${PORT}`))
+);

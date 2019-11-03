@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import axios from "axios";
 
-// COMPONENTS
+// Components
 import Spinner from "./img/spinner.gif";
 import Login from "./components/Login";
 import Home from "./components/Home";
@@ -10,17 +10,19 @@ import EditContact from "./components/Contact";
 import Register from "./components/Register";
 import Footer from "./components/Layout/Footer";
 import Errors from "./components/Errors";
-// SEMANTIC
+// Semantic
 import { Container } from "semantic-ui-react";
 import NavBar from "./components/Layout/Header";
 // CSS
 import "./css/Style.css";
 import "semantic-ui-css/semantic.min.css";
-
+// Toastify
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { success } from "./Utils/Notify";
+// Moment
 import moment from "moment";
+// JWT - Decode
 import jwtDecode from "jwt-decode";
 
 export const App = props => {
@@ -42,21 +44,17 @@ export const App = props => {
     checkToken();
   }, [state.loggedIn]);
 
-  // MAKE A CHECK WHEN SWITCHING TO DIFFERENT ROUTES
+  // Check token expiration
   useEffect(() => {
     checkToken();
   }, []);
 
-  useEffect(() => {
-    fetch("/api/users")
-      .then(res => res.json())
-      .then(res => console.log(res))
-      .catch(error => console.log(error.message));
-  });
-
-  // CHECKS JWT EXPIRATION DATE
+  // JWT Auth
   const checkToken = () => {
+    // Get token
     const token = localStorage.getItem("LoginToken");
+
+    // If token exists, compare exp time & current time
     if (token) {
       const unixToday = Date.now();
       const today = moment(unixToday).format("MM/DD/YYYY HH:mm:ss");
@@ -68,6 +66,7 @@ export const App = props => {
       } = decodeToken;
       const tokenExpires = moment.unix(exp).format("MM/DD/YYYY HH:mm:ss");
 
+      // If expired, logout
       if (today >= tokenExpires) {
         return setState({ ...state, loggedIn: false });
       } else {
@@ -76,13 +75,13 @@ export const App = props => {
     }
   };
 
-  // LOGS OUT THE USER
+  // User logout
   const logOut = () => {
     localStorage.removeItem("LoginToken");
     setState({ ...state, loggedIn: false });
   };
 
-  // LOGS IN THE USER
+  // User login
   const login = async loginState => {
     const { name, password, email } = loginState;
 
@@ -100,6 +99,7 @@ export const App = props => {
     }
   };
 
+  // Register user
   const register = async registerState => {
     try {
       const { name, password, email } = registerState;
@@ -114,13 +114,15 @@ export const App = props => {
       toast.error(error.response.data.msg);
     }
   };
-
+  // Error checks
   const showErrors = error => {
     setError({
       isErrors: true,
       errors: error.message
     });
   };
+
+  // Return from error
   const goBack = () => {
     setError({
       isErrors: false,
@@ -128,8 +130,11 @@ export const App = props => {
     });
   };
 
+  // Render error component (w.i.p)
   if (error.isErrors) {
     return <Errors errors={error.errors} goBack={goBack} />;
+
+    // Spinner
   } else if (loading) {
     return (
       <div>

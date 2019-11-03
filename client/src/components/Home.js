@@ -33,14 +33,20 @@ const Home = ({ ...props }) => {
     deleteContact: ""
   });
 
+  // Separate state for User's contacts
   const [contacts, setContacts] = useState({
     contacts: []
   });
 
+  // For unsubscribing
   const source = Axios.CancelToken.source();
+
+  //  Hooks =================================
 
   useEffect(() => {
     let isSubscribed = true;
+
+    // Async/Await All Contacts CB
     const getContacts = async () => {
       try {
         const token = localStorage.getItem("LoginToken");
@@ -52,6 +58,7 @@ const Home = ({ ...props }) => {
           },
           cancelToken: source.token
         });
+        // Gets all user's contacts
         if (contacts.data.UserContacts[0].name && isSubscribed) {
           setContacts({ contacts: contacts.data.UserContacts });
           setState({
@@ -59,6 +66,7 @@ const Home = ({ ...props }) => {
             user: contacts.data.UserContacts[0].user,
             account: decodedToken.user.name
           });
+          // If User has no contacts
         } else if (!contacts.data.UserContacts[0].name && isSubscribed) {
           setState({
             ...state,
@@ -70,12 +78,19 @@ const Home = ({ ...props }) => {
         console.log(err.response.data);
       }
     };
+
+    // Func Call
     getContacts();
+
+    // Also check headers
     props.checkToken();
     return () => {
+      // Unmount
       isSubscribed = false;
     };
   }, [state.refetch]);
+
+  // Event Listeners =============================
 
   const onChange = e => {
     setState({
@@ -149,6 +164,7 @@ const Home = ({ ...props }) => {
       console.log(err.response.data);
     }
   };
+  // =================================
 
   const allContacts = (contact, index) => {
     return (

@@ -1,4 +1,3 @@
-// CONFIGURE THE DATABASE
 const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema({

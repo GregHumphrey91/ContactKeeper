@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Axios from "axios";
 
+// Edit Contact Component
+
 const Contact = ({ ...props }) => {
   const { name, phone, email, type, user, _id } = props.location.state.contact;
 
@@ -18,6 +20,7 @@ const Contact = ({ ...props }) => {
     finishedEditing: false
   });
 
+  // Event listeners ===================
   const onChange = e => {
     setState({
       ...state,
@@ -52,9 +55,9 @@ const Contact = ({ ...props }) => {
       toast.success("Contact Updated!", { autoClose: 2000 });
     } catch (err) {
       toast.error(err.message);
-      console.log(err.message);
     }
   };
+  // =============================
 
   if (state.finishedEditing) {
     return <Redirect to={{ pathname: "/Home" }} />;

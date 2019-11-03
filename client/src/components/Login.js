@@ -6,15 +6,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({ ...props }) => {
-
-
   const [state, setState] = useState({
     email: "",
     password: "",
     token: ""
   });
 
-  const {  login, loggedIn } = props;
+  const { login, loggedIn } = props;
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -28,7 +26,7 @@ const Login = ({ ...props }) => {
       [e.target.name]: e.target.value
     });
   };
- if (loggedIn) {
+  if (loggedIn) {
     return <Redirect to="/Home" />;
   } else {
     return (

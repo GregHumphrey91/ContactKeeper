@@ -1,77 +1,64 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-// TYPE CHECKING
 const { check, validationResult } = require("express-validator");
-// IMPORT THE MONGO DB USERS MODEL
 const User = require("../MODELS/User");
-// IMPORT JSON WEB TOKEN
 const jwt = require("jsonwebtoken");
-// IMPORT CONFIG
 const config = require("config");
 const router = express.Router();
-
-// IMPORT MIDDLEWARE TO CHECK FOR TOKEN AUTH
 const middleware = require("../MIDDLEWARE/Auth");
 
-// ========================================================
+// =============================
 //
-//            THIS IS FOR THE LOGIN FORM
+//      @route     POST api/auth
+//      @desc      Login User
+//      @access   Public
 //
-//
-// ========================================================
-
-// AUTHENTICATE USER AND RETURN A TOKEN (LOGIN COMPONENT)
+// =============================
 router.post(
   "/",
   [
-    // TYPE CHECKIUNG
+    // Express Validation
     check("email", "Please include valid email").isEmail(),
     check("password", "Password is required").exists()
   ],
   async (request, response) => {
-    // ERROR OBJECT IS THE VALIDATION RESULT LIBRARY
+    // Set errors
     const errors = validationResult(request);
 
-    // If Error, return a json error object
+    // Return if error
     if (!errors.isEmpty()) {
       // Error Result
       return response.status(400).json({ msg: errors.array()[0].msg });
     }
-
-    // Destructure REQUEST BODY
     const { email, password } = request.body;
 
     try {
-      // FINDS THE USER IN DATABASE BY EMAIL
+      // Find user by email
       let user = await User.findOne({ email });
 
-      // IF NO USER, RETURN 400
+      // If no user found
       if (!user) {
         return response.status(400).json({ msg: "Invalid Credentials" });
       } else {
-        // COMPARE PASSWORD FROM POST PASSWORD TO FOUND USERS PASSWORD
+        //  compare Input password with User's password
         const isMatch = await bcrypt.compare(password, user.password);
 
-        // IF PASSWORDS DONT MATCH RETURN 400
+        // If not matching
         if (!isMatch) {
           return response.status(400).json({ msg: "Wrong Password !" });
         } else {
-          // IF THEY DO RETURN A JSON WEB TOKEN
-
-          // The payload for the jwt.sign Func, YOU CAN RETURN ANYTHING U WANT IN THE TOKEN AND ENCRYPT IT HERE
-          // Ex:  users id, name, password (not safe)
+          // Return JWT
           const payload = {
             user: {
               id: user.id,
               name: user.name
             }
           };
-          // Creates the web token to send
           jwt.sign(
             payload,
             config.get("jwtSecret"),
             {
-              expiresIn: "30min"
+              expiresIn: "15min"
             },
             async (error, token) => {
               if (error) throw error;
@@ -86,14 +73,18 @@ router.post(
   }
 );
 
-// GET LOGGED IN USER
-
-// @Route   Get api/auth
-// @desc    Get Logged In User
-// @access  Private
+// =============================
+//
+//      @route     GET api/auth
+//      @desc      Get Logged In User
+//      @access   Private
+//
+// =============================
 router.get("/", middleware, async (request, response) => {
   try {
     const { id } = request.user;
+
+    // Find and return user (hide password)
     const user = await User.findById(id).select("-password");
     response.status(200).json({ user: user });
   } catch (error) {

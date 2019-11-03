@@ -1,19 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-// TYPE CHECKING
 const { check, validationResult } = require("express-validator");
-// IMPORT THE MONGO DB USERS MODEL
 const User = require("../MODELS/User");
-// IMPORT JSON WEB TOKEN
 const jwt = require("jsonwebtoken");
-// IMPORT CONFIG
 const config = require("config");
 const router = express.Router();
-// ========================================================
-//
-//     THIS IS FOR REGISTRATION AND CREATE USER FORMS
-//
-// ========================================================
 
 // ======================================================
 //                   REGISTER USER
@@ -23,16 +14,15 @@ const router = express.Router();
 // @access      Public
 //
 // THIS METHOD WILL FIRST DO SERVER SIDE CHECKING FOR ALL POST FIELDS,
-// RETURN ANY ERRORS, THEN IT WILL DESTRUCTURE THE POST VARIABLES
+// RETURN IF ANY ERRORS, THEN IT WILL DESTRUCTURE THE POST VARIABLES
 // AND IF NO USER EXISTS, WILL CREATE A NEW USER,
 // HASH THE PASSWORD THEN SAVE TO DATABASE
 // ====================================================
-// STEP 1 SET POST ROUTE
-router.post(
-  "/", // Endpoint
 
+router.post(
+  "/",
   [
-    // STEP 2:  Type Checking
+    // Express Validation
     check("name", "Please add name")
       .not()
       .isEmpty(),
@@ -42,67 +32,57 @@ router.post(
       "Please enter a password with 6 or more characters"
     ).isLength({ min: 6 })
   ],
-
-  // STEP 3:  BEGIN CALLBACK
   async (request, response) => {
-    // Error Checking for Request Object
+    // Set errors to result
     const errors = validationResult(request);
 
-    // If Error, return a json error object
+    // Return if error
     if (!errors.isEmpty()) {
-      // Error Result
       return response.status(400).json({ msg: errors.array()[0].msg });
     }
 
-    // Destructure Post fields
     const { name, email, password } = request.body;
 
-    // Try Catch block
     try {
-      // user equals the mongoose user model that finds the matching email
+      // Matches by Email
       let user = await User.findOne({ email });
 
-      // matching user
+      // If user exists
       if (user) {
-        // return user already exists
         return response.status(400).json({ msg: "User already exists" });
       } else {
-        // CREATE THE USER FROM USER MODEL AND PASS IN POST VARIABLES
+        // Create new user
         user = new User({
           name,
           email,
           password
         });
 
-        // SALT FOR PASSWORD HASH
+        // generate rounds
         const salt = await bcrypt.genSalt();
-
-        // HASH THE PASSWORD
+        // hash pass
         user.password = await bcrypt.hash(password, salt);
 
-        // SAVE THE USER IN MONGOOSE
+        // Save new user
         await user.save();
 
-        // RETURN A WEB TOKEN WITH THE USER ID AS THE PAYLOAD (RETURN OBJECT)
+        // Return JWT
         const payload = {
           user: {
             id: user.id
           }
         };
-        //PARAMS! = 1: The Payload, 2: create the JWT inside a config file, 3: expriration time in seconds  4: Callback with Error & Token
         jwt.sign(
-          payload, // 1 the payload object
-          config.get("jwtSecret"), // 2 the config file
-          { expiresIn: "3hr" }, // 3 the expiration date
+          payload,
+          config.get("jwtSecret"),
+          { expiresIn: "3hr" },
           (error, token) => {
-            // 4 the callback func for returning token
             if (error) throw error;
             response.status(200).json({ token });
           }
         );
       }
     } catch (error) {
-      console.error(error.request);
       response.status(500).send("Server Error \n " + error.message);
     }
   }
@@ -123,7 +103,7 @@ router.get("/", async (request, response) => {
   // Checks mongoose for all entries
   const users = await User.find();
   if (users) {
-    // Returns all users into a json Object
+    // Returns all users into a JSON Object
     response.status(200).json({ Users: users });
   } else {
     // Returns if no users in database
@@ -144,8 +124,9 @@ router.get("/", async (request, response) => {
 router.get("/:id", async (request, response) => {
   try {
     const { id } = request.params;
+    // Find by ID
     const user = await User.findOne({ _id: id });
-
+    // Return if matching
     if (user) {
       return response.status(200).json({ User: user });
     } else {

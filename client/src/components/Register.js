@@ -5,7 +5,6 @@ import "semantic-ui-css/semantic.min.css";
 import { ToastContainer, toast } from "react-toastify";
 
 const Register = ({ ...props }) => {
-
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -36,74 +35,72 @@ const Register = ({ ...props }) => {
     });
   };
 
- 
-    return (
-      <Fragment>
-        <Form action="" onSubmit={onSubmit}>
-          <Icon name="user plus" size="massive" />
-          <Header as="h1" dividing>
-            Registration
-          </Header>
-          <Form.Group block={"true"} widths="equal">
-            <Form.Field>
-              <Input
-                icon="user"
-                onChange={onChange}
-                iconPosition="left"
-                name="name"
-                type="text"
-                id="name"
-                type="text"
-                value={state.name}
-                placeholder="Username"
-              />
-            </Form.Field>
-            <Form.Field>
-              <Input
-                icon="mail"
-                onChange={onChange}
-                iconPosition="left"
-                name="email"
-                type="mail"
-                id="email"
-                value={state.email}
-                placeholder="Email"
-              />
-            </Form.Field>
-          </Form.Group>
-          <Form.Group widths="equal">
-            <Form.Field>
-              <Input
-                onChange={onChange}
-                name="password"
-                icon="eye"
-                iconPosition="left"
-                type="password"
-                value={state.password}
-                placeholder="Password"
-              />
-            </Form.Field>
-            <Form.Field>
-              <Input
-                onChange={onChange}
-                name="password2"
-                icon="eye"
-                iconPosition="left"
-                type="password"
-                value={state.password2}
-                placeholder="Re-Enter Password"
-              />
-            </Form.Field>
-          </Form.Group>
-          <Divider></Divider>
-          <Button primary fluid size="huge">
-            Sign Up
-          </Button>
-        </Form>
-        <ToastContainer />
-      </Fragment>
-    );
-  
+  return (
+    <Fragment>
+      <Form action="" onSubmit={onSubmit}>
+        <Icon name="user plus" size="massive" />
+        <Header as="h1" dividing>
+          Registration
+        </Header>
+        <Form.Group block={"true"} widths="equal">
+          <Form.Field>
+            <Input
+              icon="user"
+              onChange={onChange}
+              iconPosition="left"
+              name="name"
+              type="text"
+              id="name"
+              type="text"
+              value={state.name}
+              placeholder="Username"
+            />
+          </Form.Field>
+          <Form.Field>
+            <Input
+              icon="mail"
+              onChange={onChange}
+              iconPosition="left"
+              name="email"
+              type="mail"
+              id="email"
+              value={state.email}
+              placeholder="Email"
+            />
+          </Form.Field>
+        </Form.Group>
+        <Form.Group widths="equal">
+          <Form.Field>
+            <Input
+              onChange={onChange}
+              name="password"
+              icon="eye"
+              iconPosition="left"
+              type="password"
+              value={state.password}
+              placeholder="Password"
+            />
+          </Form.Field>
+          <Form.Field>
+            <Input
+              onChange={onChange}
+              name="password2"
+              icon="eye"
+              iconPosition="left"
+              type="password"
+              value={state.password2}
+              placeholder="Re-Enter Password"
+            />
+          </Form.Field>
+        </Form.Group>
+        <Divider></Divider>
+        <Button primary fluid size="huge">
+          Sign Up
+        </Button>
+      </Form>
+      <ToastContainer />
+    </Fragment>
+  );
 };
 
 export default Register;
