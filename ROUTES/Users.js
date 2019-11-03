@@ -119,7 +119,7 @@ router.post(
 //
 // ====================================================
 
-router.get("/",  async (request, response) => {
+router.get("/", async (request, response) => {
   // Checks mongoose for all entries
   const users = await User.find();
   if (users) {
@@ -155,52 +155,9 @@ router.get("/:id", async (request, response) => {
     throw error;
   }
 });
-// ======================================================
-//                   UPDATE USER
-//
-// @route       GET api/users
-// @desc        GETS a user
-// @access      Public
-//
-//
-// ====================================================
-// router.put("/:id", async (request, response) => {
-//   const { id } = request.params;
 
-//   const editUser = await User.findOne({ _id: id });
-
-//   if (editUser) {
-//     const { name, email, password } = request.body;
-//     console.log(editUser);
-
-//     editUser({
-//       name,
-//       email,
-//       password
-//     });
-
-//     // SALT FOR PASSWORD HASH
-//     const salt = await bcrypt.genSalt(10);
-
-//     // HASH THE PASSWORD
-//     editUser.password = await bcrypt.hash(password, salt);
-//     await editUser.save();
-//     return response.status(200).json({ editUser });
-//   } else {
-//     return response.status(404).json({ msg: "That user wasn't found" });
-//   }
+// router.delete("/:id", (request, response) => {
+//   response.json({ msg: "Delete User" });
 // });
-// ======================================================
-//                   DELETE USER
-//
-// @route       GET api/users
-// @desc        GETS a user
-// @access      Public
-//
-//
-// ====================================================
-router.delete("/:id", (request, response) => {
-  response.json({ msg: "Delete User" });
-});
 
 module.exports = router;
